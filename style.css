@@ -1,0 +1,367 @@
+* { box-sizing: border-box; }
+
+body {
+    margin: 0;
+    background-color: #000;
+    color: #f8fafc;
+    font-family: Arial, sans-serif;
+    overflow-x: hidden;
+    padding-top: 60px;
+}
+
+main { min-height: 100vh; }
+
+h1 { font-size: clamp(3rem, 5vw, 5rem); text-align: center; margin-bottom: 10px; }
+h2 { font-size: clamp(2.25rem, 4vw, 3.5rem); margin-bottom: 16px; }
+h3 { font-size: clamp(1.5rem, 2.3vw, 2rem); margin-bottom: 12px; }
+
+p { line-height: 1.7; max-width: 900px; margin: 0; }
+
+section {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 60px 20px;
+    width: 100%;
+}
+
+section > * { width: 100%; max-width: 1200px; }
+
+/* ── Secciones ── */
+.Portada, .inicio { background: linear-gradient(to bottom, #020617, #111827); }
+.inicio {
+    background-color: #0f172a;
+    border-radius: 10px 30px 60px 120px;
+    animation: slideIn 2s ease;
+}
+@keyframes slideIn {
+    from { transform: translateX(-40%); opacity: 0; }
+    to   { transform: translateX(0);    opacity: 1; }
+}
+.Mapa        { background-color: #0f172a; }
+.Presupuesto { background-color: #111827; }
+.Global      { background-color: #0f172a; }
+.Conclu      { background-color: #111827; text-align: center; }
+
+/* ── MAPA ── */
+.contenedor-mapa {
+    position: relative;
+    width: 100%;
+    max-width: 1000px;
+    background: #212842;
+    border-radius: 28px;
+    padding: 30px;
+    margin-top: 30px;
+    overflow: hidden;   /* evita que el viewport desborde */
+}
+
+.map-viewport {
+    position: relative;
+    transform-origin: 0 0;
+    transition: transform 300ms ease;
+    touch-action: none;
+    will-change: transform;
+}
+.map-viewport.dragging { transition: none; cursor: grabbing; }
+
+.mapa-base {
+    width: 100%;
+    display: block;
+    border-radius: 20px;
+    max-width: none;
+}
+
+.pins {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    cursor: pointer;
+    font-size: 1.5rem;
+    transition: transform 0.2s;
+    z-index: 12;
+    user-select: none;
+}
+.pins:hover { transform: translate(-50%, -50%) scale(1.4); }
+
+.map-tooltip {
+    position: absolute;
+    pointer-events: none;
+    background: rgba(2,6,23,0.96);
+    color: #f8fafc;
+    padding: 8px 12px;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    z-index: 40;
+    transform: translate(-50%, -120%);
+    box-shadow: 0 8px 24px rgba(0,0,0,.6);
+    white-space: nowrap;
+    display: none;
+}
+
+/* FIX: info-panels — posición normal en el flujo, no absolute */
+.info-panel {
+    display: none;          /* JS lo cambia a block */
+    position: relative;     /* flujo normal, NO absolute */
+    background: rgba(0, 20, 60, 0.92);
+    border: 1px solid #00aaff;
+    color: #cce8ff;
+    padding: 1.2rem 1.5rem;
+    margin-top: 1.2rem;
+    border-radius: 12px;
+    max-width: 600px;
+    width: 100%;
+}
+.info-panel h3 { color: #00d4ff; margin-bottom: 0.5rem; }
+
+.cerrar-panel {
+    float: right;
+    background: transparent;
+    border: 1px solid #00aaff;
+    color: #00d4ff;
+    cursor: pointer;
+    padding: 2px 8px;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    margin-left: 10px;
+}
+.cerrar-panel:hover { background: #00aaff20; }
+
+/* ── PRESUPUESTO ── */
+/* FIX: grid de 2 columnas, listas en columna derecha apiladas */
+.contenedor-presupuesto {
+    display: grid;
+    grid-template-columns: 420px 1fr;
+    gap: 30px;
+    width: 100%;
+    margin-top: 40px;
+    align-items: start;
+}
+
+.grafico-circular {
+    background: #212842;
+    border-radius: 28px;
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    backdrop-filter: blur(10px);
+}
+
+#graficoPresupuesto {
+    width: 280px;
+    height: 280px;
+}
+
+.legend { width: 100%; }
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 8px;
+    font-size: 0.9rem;
+    color: #f8fafc;
+}
+.legend-swatch {
+    width: 14px; height: 14px;
+    border-radius: 3px;
+    flex: 0 0 14px;
+}
+
+/* Columna derecha: listas apiladas una encima de otra */
+.listas-presupuesto {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.fijos, .variable {
+    background: rgba(255,255,255,0.06);
+    border-radius: 24px;
+    padding: 28px;
+}
+.fijos ul, .variable ul { padding-left: 1.2rem; margin-top: 12px; }
+.fijos li, .variable li { margin-bottom: 16px; }
+.fijos li p, .variable li p { margin-top: 6px; color: #cbd5e1; font-size: 0.92rem; }
+p.total { margin-top: 14px; font-weight: bold; color: #7dd3fc; font-size: 1.05rem; }
+
+/* ── GLOBALIZACIÓN ── */
+.contenedor-globalizacion {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 30px;
+    margin-top: 40px;
+}
+.tarjeta-impacto {
+    background: rgba(255,255,255,0.08);
+    padding: 30px;
+    border-radius: 20px;
+    width: min(100%, 280px);
+    backdrop-filter: blur(10px);
+    transition: transform 0.3s ease;
+}
+.tarjeta-impacto:hover { transform: translateY(-10px); }
+
+/* ── CONCLUSIÓN ── */
+.frase {
+    font-size: clamp(1.75rem, 2.5vw, 2.75rem);
+    opacity: 0;
+    animation: aparecer 3s infinite alternate;
+}
+@keyframes aparecer {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+/* ── FOTOS ── */
+.contenedor-fotos {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+    margin-top: 40px;
+}
+.contenedor-fotos img {
+    width: min(100%, 250px);
+    height: 160px;
+    object-fit: cover;
+    border-radius: 20px;
+    transition: transform 0.3s ease;
+}
+.contenedor-fotos img:hover { transform: scale(1.05); }
+
+/* ── BOTONES ── */
+button {
+    background-color: #000;
+    color: #f8fafc;
+    padding: 15px 30px;
+    border: 2px solid #f8fafc;
+    transition: 0.3s ease;
+    cursor: pointer;
+}
+button:hover { background-color: #f8fafc; color: #000; }
+
+/* ── RESPONSIVE ── */
+.nav-viaje {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: center;
+    gap: 24px;
+    padding: 14px 20px;
+    background: rgba(2, 6, 23, 0.88);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(0,170,255,0.15);
+}
+
+.nav-viaje a {
+    color: #94a3b8;
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: color 0.2s;
+}
+
+.nav-viaje a:hover { color: #00d4ff; }
+
+.Itinerario { background-color: #0a0f1e; }
+
+.timeline {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    width: 100%;
+    max-width: 900px;
+    margin-top: 40px;
+    position: relative;
+}
+
+.timeline::before {
+    content: '';
+    position: absolute;
+    left: 28px;
+    top: 0; bottom: 0;
+    width: 2px;
+    background: linear-gradient(to bottom, #00aaff, #0047ab);
+}
+
+.timeline-destino {
+    display: flex;
+    align-items: flex-start;
+    gap: 24px;
+    padding: 24px 0 24px 70px;
+    position: relative;
+}
+
+.timeline-badge {
+    position: absolute;
+    left: 0;
+    top: 28px;
+    background: #00aaff;
+    color: #000;
+    font-weight: bold;
+    font-size: 0.75rem;
+    padding: 4px 8px;
+    border-radius: 20px;
+    white-space: nowrap;
+}
+
+.timeline-card {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(0,170,255,0.2);
+    border-radius: 16px;
+    padding: 20px 24px;
+    width: 100%;
+    transition: border-color 0.3s ease;
+}
+
+.timeline-card:hover {
+    border-color: #00aaff;
+}
+
+.timeline-card h3 { color: #00d4ff; margin-bottom: 8px; }
+.timeline-card ul { padding-left: 1.2rem; color: #cbd5e1; font-size: 0.95rem; }
+.timeline-card li { margin-bottom: 6px; }
+.timeline-card p  { color: #94a3b8; font-size: 0.9rem; margin-bottom: 12px; }
+
+.info-hotel, .info-actividades {
+    margin-top: 14px;
+    padding-top: 12px;
+    border-top: 1px solid rgba(0,170,255,0.2);
+}
+
+.info-hotel h4, .info-actividades h4 {
+    color: #7dd3fc;
+    font-size: 1rem;
+    margin-bottom: 8px;
+}
+
+.info-panel ul {
+    padding-left: 1.2rem;
+    margin-top: 8px;
+}
+
+.info-panel li {
+    margin-bottom: 8px;
+    font-size: 0.92rem;
+    color: #cce8ff;
+}
+
+.dias-viaje {
+    font-size: 0.85rem;
+    color: #7dd3fc;
+    margin-top: -6px;
+    margin-bottom: 4px;
+}
+
+@media (max-width: 900px) {
+    .contenedor-presupuesto {
+        grid-template-columns: 1fr;
+    }
+    .contenedor-globalizacion { flex-direction: column; }
+    section { padding: 40px 16px; }
+    .nav-viaje { gap: 12px; padding: 10px 8px; font-size: 0.8rem; }
+    .nav-viaje a { font-size: 0.75rem; }
+}

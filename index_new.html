@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Viaje tecnológico</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!--NAVEGACIÓN FIJA-->
+    <nav class="nav-viaje">
+        <a href="#pantalla-1">Portada</a>
+        <a href="#pantalla-2">Mapa</a>
+        <a href="#pantalla-itinerario">Itinerario</a>
+        <a href="#pantalla-3">Presupuesto</a>
+        <a href="#pantalla-4">Globalización</a>
+        <a href="#pantalla-5">Conclusión</a>
+    </nav>
+
+    <main id="viaje-por-el-mundo-tecnológico" class="inicio">
+        <h1>Viaje tecnológico</h1>
+        <h3>(Con Marlon)</h3>
+
+        <!--PANTALLA 1: Portada-->
+        <section id="pantalla-1" class="Portada">
+            <header class="bloque-título">
+                <h1>Crónicas de mi viaje</h1>
+                <p>Presentación de mi viaje</p>
+            </header>
+            <div class="contenedor-fotos">
+                <img src="tokio.jpg" alt="Foto 1">
+                <img src="shenz.jpg" alt="Foto 2">
+                <img src="spacex.jpg" alt="Foto 3">
+                <img src="open.jpg" alt="Foto 4">
+                <img src="cern.jpg" alt="Foto 5">
+                <img src="dub.jpg" alt="Foto 6">
+            </div>
+        </section>
+
+        <!--PANTALLA 2: Mapa interactivo-->
+        <section id="pantalla-2" class="Mapa">
+            <h2>Mapa interactivo</h2>
+            <p>Explora los lugares que visité</p>
+            <div class="contenedor-mapa">
+                <div class="map-viewport" id="mapViewport">
+                    <!-- FIX 1: nombre de archivo correcto -->
+                    <img src="mapa.jpg" alt="Mapa del mundo" class="mapa-base">
+
+                    <div class="pins" id="pin-cern"     style="top:28%;left:49%;" data-title="CERN – Ginebra"          data-info="info-cern">📍</div>
+                    <div class="pins" id="pin-dubai"    style="top:38%;left:58%;" data-title="Dubái"                   data-info="info-dubai">📍</div>
+                    <div class="pins" id="pin-shenzhen" style="top:38%;left:74%;" data-title="Shenzhen"                data-info="info-shenzhen">📍</div>
+                    <div class="pins" id="pin-tokio"    style="top:33%;left:80%;" data-title="Tokio"                   data-info="info-tokio">📍</div>
+                    <div class="pins" id="pin-spacex"   style="top:40%;left:12%;" data-title="SpaceX – California"     data-info="info-spacex">📍</div>
+                    <div class="pins" id="pin-openai"   style="top:36%;left:11%;" data-title="OpenAI – Silicon Valley" data-info="info-openai">📍</div>
+                </div>
+                <div class="map-tooltip" id="mapTooltip" aria-hidden="true"></div>
+            </div>
+
+            <!-- FIX 2: info-panels con información detallada -->
+            <div id="info-cern" class="info-panel">
+                <button class="cerrar-panel" onclick="cerrarInfo()">✕</button>
+                <h3>⚛️ CERN – Ginebra</h3>
+                <p class="dias-viaje">📅 Días 1 – 3 del viaje</p>
+                <div class="info-hotel">
+                    <h4>🏨 Hotel sugerido</h4>
+                    <p><strong>Ibis Saint-Genis-Pouilly Genève</strong> — ubicado en la frontera con Francia, a minutos del CERN. Precio medio: 110 €/noche.</p>
+                </div>
+                <div class="info-actividades">
+                    <h4>🔬 Actividades tecnológicas</h4>
+                    <ul>
+                        <li>Visita gratuita al CERN Science Gateway (visit.cern) para explorar exposiciones interactivas sobre física de partículas.</li>
+                        <li>Recorrido por el Microcosm y el Globe of Science and Innovation.</li>
+                    </ul>
+                </div>
+            </div>
+            <div id="info-dubai" class="info-panel">
+                <button class="cerrar-panel" onclick="cerrarInfo()">✕</button>
+                <h3>🌆 Dubái</h3>
+                <p class="dias-viaje">📅 Días 4 – 7 del viaje</p>
+                <div class="info-hotel">
+                    <h4>🏨 Hotel sugerido</h4>
+                    <p><strong>Rove Downtown Dubai</strong> — hotel de diseño moderno e hiperconectado, ideal para nómadas digitales. Precio medio: 95 €/noche.</p>
+                </div>
+                <div class="info-actividades">
+                    <h4>🔬 Actividades tecnológicas</h4>
+                    <ul>
+                        <li>Entrada al Museo del Futuro (Museum of the Future) con exposiciones de IA y biotecnología.</li>
+                        <li>Visita al distrito de innovación Dubai Internet City y el DIFC Innovation Hub.</li>
+                        <li>Subida al observatorio del Burj Khalifa con sus ascensores de alta velocidad.</li>
+                    </ul>
+                </div>
+            </div>
+            <div id="info-shenzhen" class="info-panel">
+                <button class="cerrar-panel" onclick="cerrarInfo()">✕</button>
+                <h3>🏙️ Shenzhen</h3>
+                <p class="dias-viaje">📅 Días 8 – 12 del viaje</p>
+                <div class="info-hotel">
+                    <h4>🏨 Hotel sugerido</h4>
+                    <p><strong>The Langham Shenzhen</strong> (o alternativas de negocios en Futian), cerca de los distritos financieros y tecnológicos. Precio medio: 75 €/noche.</p>
+                </div>
+                <div class="info-actividades">
+                    <h4>🔬 Actividades tecnológicas</h4>
+                    <ul>
+                        <li>Exploración del mercado de electrónica más grande del mundo: Huaqiangbei.</li>
+                        <li>Visita exterior a las sedes de Tencent Seafront Towers y la sede de DJI (Sky City).</li>
+                        <li>Prueba de los taxis autónomos sin conductor en el distrito de Pingshan.</li>
+                    </ul>
+                </div>
+            </div>
+            <div id="info-tokio" class="info-panel">
+                <button class="cerrar-panel" onclick="cerrarInfo()">✕</button>
+                <h3>🤖 Tokio</h3>
+                <p class="dias-viaje">📅 Días 13 – 16 del viaje</p>
+                <div class="info-hotel">
+                    <h4>🏨 Hotel sugerido</h4>
+                    <p><strong>Henn na Hotel Tokyo Asakusabashi</strong> — atendido por robots animatrónicos en recepción y con sistemas domóticos avanzados. Precio medio: 85 €/noche.</p>
+                </div>
+                <div class="info-actividades">
+                    <h4>🔬 Actividades tecnológicas</h4>
+                    <ul>
+                        <li>Ruta tecnológica por Akihabara (electrónica, robótica y cultura geek).</li>
+                        <li>Arte digital inmersivo en teamLab Planets.</li>
+                        <li>Museo Miraikan (Ciencias Emergentes e Innovación) en Odaiba.</li>
+                    </ul>
+                </div>
+            </div>
+            <div id="info-spacex" class="info-panel">
+                <button class="cerrar-panel" onclick="cerrarInfo()">✕</button>
+                <h3>🚀 SpaceX – California</h3>
+                <p class="dias-viaje">📅 Días 20 – 21 del viaje</p>
+                <div class="info-hotel">
+                    <h4>🏨 Hotel sugerido</h4>
+                    <p><strong>The Domain Hotel en Sunnyvale o CitizenM San Francisco Union Square</strong> — check-in automatizado y diseño tecnológico. Precio medio: 175 €/noche.</p>
+                </div>
+                <div class="info-actividades">
+                    <h4>🔬 Actividades tecnológicas</h4>
+                    <ul>
+                        <li>Vuelo nacional hacia Los Ángeles para fotografiar el cohete Falcon 9 erguido frente a la sede de SpaceX en Hawthorne.</li>
+                    </ul>
+                </div>
+            </div>
+            <div id="info-openai" class="info-panel">
+                <button class="cerrar-panel" onclick="cerrarInfo()">✕</button>
+                <h3>💡 OpenAI – Silicon Valley</h3>
+                <p class="dias-viaje">📅 Días 17 – 21 del viaje</p>
+                <div class="info-hotel">
+                    <h4>🏨 Hotel sugerido</h4>
+                    <p><strong>The Domain Hotel en Sunnyvale o CitizenM San Francisco Union Square</strong> — check-in automatizado y diseño tecnológico. Precio medio: 175 €/noche.</p>
+                </div>
+                <div class="info-actividades">
+                    <h4>🔬 Actividades tecnológicas</h4>
+                    <ul>
+                        <li>Ruta exterior por las oficinas de OpenAI en Mission District, San Francisco.</li>
+                        <li>Apple Park Visitor Center en Cupertino con maqueta interactiva en Realidad Aumentada.</li>
+                        <li>Visita al Googleplex (Mountain View) y al cartel de "Me gusta" de Meta (Menlo Park).</li>
+                        <li>Computer History Museum en Mountain View.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!--PANTALLA ITINERARIO: Línea de tiempo-->
+        <section id="pantalla-itinerario" class="Itinerario">
+            <h2>Itinerario día a día</h2>
+            <p>21 días, 6 destinos, 1 viaje tecnológico</p>
+
+            <div class="timeline">
+                <div class="timeline-destino" data-destino="cern">
+                    <div class="timeline-badge">Días 1–3</div>
+                    <div class="timeline-card">
+                        <h3>⚛️ Ginebra / CERN</h3>
+                        <p>Ibis Saint-Genis-Pouilly · 110 €/noche</p>
+                        <ul>
+                            <li>Visita gratuita al CERN Science Gateway con exposiciones interactivas.</li>
+                            <li>Recorrido por el Microcosm y el Globe of Science and Innovation.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="timeline-destino" data-destino="dubai">
+                    <div class="timeline-badge">Días 4–7</div>
+                    <div class="timeline-card">
+                        <h3>🌆 Dubái</h3>
+                        <p>Rove Downtown Dubai · 95 €/noche</p>
+                        <ul>
+                            <li>Entrada al Museo del Futuro con exposiciones de IA y biotecnología.</li>
+                            <li>Visita a Dubai Internet City y el DIFC Innovation Hub.</li>
+                            <li>Subida al observatorio del Burj Khalifa.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="timeline-destino" data-destino="shenzhen">
+                    <div class="timeline-badge">Días 8–12</div>
+                    <div class="timeline-card">
+                        <h3>🏙️ Shenzhen</h3>
+                        <p>The Langham Shenzhen · 75 €/noche</p>
+                        <ul>
+                            <li>Exploración del mercado de electrónica Huaqiangbei.</li>
+                            <li>Visita a sedes de Tencent y DJI.</li>
+                            <li>Prueba de taxis autónomos sin conductor.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="timeline-destino" data-destino="tokio">
+                    <div class="timeline-badge">Días 13–16</div>
+                    <div class="timeline-card">
+                        <h3>🤖 Tokio</h3>
+                        <p>Henn na Hotel Tokyo Asakusabashi · 85 €/noche</p>
+                        <ul>
+                            <li>Ruta tecnológica por Akihabara.</li>
+                            <li>Arte digital inmersivo en teamLab Planets.</li>
+                            <li>Museo Miraikan en Odaiba.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="timeline-destino" data-destino="openai">
+                    <div class="timeline-badge">Días 17–21</div>
+                    <div class="timeline-card">
+                        <h3>💡 Silicon Valley / OpenAI</h3>
+                        <p>The Domain Hotel, Sunnyvale · 175 €/noche</p>
+                        <ul>
+                            <li>Ruta exterior por oficinas de OpenAI en San Francisco.</li>
+                            <li>Apple Park Visitor Center con RA en Cupertino.</li>
+                            <li>Googleplex y Meta en Menlo Park.</li>
+                            <li>Computer History Museum en Mountain View.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="timeline-destino" data-destino="spacex">
+                    <div class="timeline-badge">Días 20–21</div>
+                    <div class="timeline-card">
+                        <h3>🚀 SpaceX – Hawthorne</h3>
+                        <p>CitizenM San Francisco Union Square · 175 €/noche</p>
+                        <ul>
+                            <li>Vuelo a Los Ángeles para fotografiar el Falcon 9.</li>
+                            <li>Visita a la sede de SpaceX en Hawthorne.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!--PANTALLA 3: Presupuesto-->
+        <section id="pantalla-3" class="Presupuesto">
+            <h2>Presupuesto</h2>
+            <p>Detalles de mis gastos durante el viaje</p>
+
+            <div class="contenedor-presupuesto">
+                <!-- FIX 3: grafico ocupa su propia celda, listas en columna derecha -->
+                <div class="grafico-circular">
+                    <canvas id="graficoPresupuesto"></canvas>
+                    <div class="legend" id="graficoLegend"></div>
+                </div>
+
+                <div class="listas-presupuesto">
+                    <div class="fijos">
+                        <h3>Gastos Fijos</h3>
+                        <ul>
+                            <li>Billete de avión multi-destinos: 4200$
+                                <p>Ruta: Madrid-Ginebra-Dubái-Shenzhen-Tokio-San Francisco-Madrid</p>
+                            </li>
+                            <li>Alojamiento (Hoteles 3 o 4 estrellas): 1890$
+                                <p>21 noches = 90$/noche</p>
+                            </li>
+                            <li>Seguro de viaje Internacional con Cobertura Alta: 140$</li>
+                            <li>Visados, permisos electrónicos y eSIM: 200$</li>
+                        </ul>
+                        <p class="total">Total: 6430$</p>
+                    </div>
+
+                    <div class="variable">
+                        <h3>Gastos Variables</h3>
+                        <ul>
+                            <li>Comida: 1150$
+                                <p>Promedio 55$ al día</p>
+                            </li>
+                            <li>Transporte local: 430$</li>
+                            <li>Entradas, tours y actividades: 500$</li>
+                            <li>Propinas y fondos de emergencia: 2000$</li>
+                        </ul>
+                        <p class="total">Total: 4080$</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!--PANTALLA 4: Globalización-->
+        <section id="pantalla-4" class="Global">
+            <h2>¿Qué impacto tuvo la Globalización en mi viaje?</h2>
+            <div class="contenedor-globalizacion">
+                <article class="tarjeta-impacto">
+                    <h3>Impacto Cultural</h3>
+                    <p>Intercambiar tradiciones conlleva un riesgo de perder la identidad cultural local.</p>
+                </article>
+                <article class="tarjeta-impacto">
+                    <h3>Impacto Económico</h3>
+                    <p>El turismo puede generar ingresos pero... ¿y la gentrificación?</p>
+                </article>
+                <article class="tarjeta-impacto">
+                    <h3>Impacto Ambiental</h3>
+                    <p>Los aviones y su contaminación, además de los residuos generados por el turismo.</p>
+                </article>
+            </div>
+        </section>
+
+        <!--PANTALLA 5: Conclusión-->
+        <section id="pantalla-5" class="Conclu">
+            <audio id="musica-fondo" src="musica-ambiental.mp3" loop></audio>
+            <div class="contenedor-cinematográfico">
+                <div class="frases-secuencia">
+                    <p class="frase">"Viajar ya no solo consiste en descubrir lugares"</p>
+                    <p class="frase">"Cada turista transforma la cultura"</p>
+                    <p class="frase">"El destino final siempre es una nueva forma de mirar"</p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+    <script src="script.js"></script>
+</body>
+</html>
